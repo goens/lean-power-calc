@@ -37,7 +37,7 @@ theorem inv_mul_cancel_vision (h : a ≠ 0) : a⁻¹ * a = 1 := by
     a⁻¹ * a = a⁻¹ * a * a⁻¹ * a⁻¹⁻¹ 
             = a⁻¹ * a⁻¹⁻¹
             = 1
-    with [ne_eq, inv_ne_zero h, not_false_eq_true, mul_inv_cancel_right₀, mul_inv_cancel]
+    using [ne_eq, inv_ne_zero h, not_false_eq_true, mul_inv_cancel_right₀, mul_inv_cancel]
     -- could maybe be inferred from tags?
 
 end GroupWithZero 

@@ -34,13 +34,16 @@ theorem two_le_centralBinom (n : ℕ) (n_pos : 0 < n) : 2 ≤ centralBinom n :=
 
 /-- An inductive property of the central binomial coefficient.
 -/
-
 theorem succ_mul_centralBinom_succ_rw (n : ℕ) :
     (n + 1) * centralBinom (n + 1) = 2 * (2 * n + 1) * centralBinom n := by
     unfold centralBinom
     rw [mul_comm]
+    --
+    --rw [choose_succ_right_eq (2 * (n + 1)) n, choose_mul_succ_eq]
     rw [mul_add 2 n 1]; simp
-    rw [choose_succ_right_eq, choose_mul_succ_eq]
+    rw [choose_succ_right_eq] 
+    rw [choose_mul_succ_eq]
+    --rw [choose_succ_right_eq (2 * (n + 1)) n]
     -- TODO: finish
     --_ = 2 * ((2 * n + 1).choose n * (n + 1)) := by ring
     rw [two_mul n, add_assoc, Nat.add_sub_cancel_left]
@@ -60,7 +63,7 @@ theorem succ_mul_centralBinom_succ (n : ℕ) :
     _ = 2 * ((2 * n).choose n * (2 * n + 1)) := by rw [choose_mul_succ_eq]
     _ = 2 * (2 * n + 1) * (2 * n).choose n := by rw [mul_assoc, mul_comm (2 * n + 1)]
 
--- maybe leave some out
+-- maybe leave some steps out
 theorem succ_mul_centralBinom_succ_vision (n : ℕ) :
     (n + 1) * centralBinom (n + 1) = 2 * (2 * n + 1) * centralBinom n := by
   calc'

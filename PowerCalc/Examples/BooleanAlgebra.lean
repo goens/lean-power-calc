@@ -9,6 +9,13 @@ theorem sdiff_le' : x \ y ≤ x :=
     x \ y ≤ x ⊓ y ⊔ x \ y := le_sup_right
     _ = x := sup_inf_sdiff x y
 
+theorem sdiff_le_vision : x \ y ≤ x :=
+  calc'
+    x \ y ≤ x ⊓ y ⊔ x \ y 
+          = x 
+    using [le_sup_right, sup_inf_sdiff]
+
+
 theorem sdiff_sup' : y \ (x ⊔ z) = y \ x ⊓ y \ z :=
   sdiff_unique
     (calc
@@ -25,3 +32,20 @@ theorem sdiff_sup' : y \ (x ⊔ z) = y \ x ⊓ y \ z :=
       _ = y ⊓ x ⊓ y \ x ⊓ y \ z ⊔ y \ x ⊓ (y \ z ⊓ (y ⊓ z)) := by ac_rfl
       _ = ⊥ := by rw [inf_inf_sdiff, bot_inf_eq, bot_sup_eq, @inf_comm _ _ (y \ z),
                       inf_inf_sdiff, inf_bot_eq])
+
+theorem sdiff_sup_vision : y \ (x ⊔ z) = y \ x ⊓ y \ z :=
+  sdiff_unique
+    (calc'
+      y ⊓ (x ⊔ z) ⊔ y \ x ⊓ y \ z = (y ⊓ (x ⊔ z) ⊔ y \ x) ⊓ (y ⊓ (x ⊔ z) ⊔ y \ z)
+                                 -- = (y ⊓ x ⊔ y ⊓ z ⊔ y \ x) ⊓ (y ⊓ x ⊔ y ⊓ z ⊔ y \ z)
+                                  = (y ⊓ z ⊔ (y ⊓ x ⊔ y \ x)) ⊓ (y ⊓ x ⊔ (y ⊓ z ⊔ y \ z))
+                                 -- = (y ⊓ z ⊔ y) ⊓ (y ⊓ x ⊔ y)
+                                  = (y ⊔ y ⊓ z) ⊓ (y ⊔ y ⊓ x)
+                                  = y 
+      using [sup_inf_left, inf_sup_left, ac_rfl, sup_inf_sdiff, sup_inf_self, inf_idem]
+    (calc'
+      y ⊓ (x ⊔ z) ⊓ (y \ x ⊓ y \ z) = (y ⊓ x ⊔ y ⊓ z) ⊓ (y \ x ⊓ y \ z) 
+                                    = y ⊓ x ⊓ (y \ x ⊓ y \ z) ⊔ y ⊓ z ⊓ (y \ x ⊓ y \ z)
+                                    = y ⊓ x ⊓ y \ x ⊓ y \ z ⊔ y \ x ⊓ (y \ z ⊓ (y ⊓ z))
+                                    = ⊥
+      using [inf_inf_sdiff, bot_inf_eq, bot_sup_eq, inf_comm, inf_bot_eq, inf_sup_left, inf_sup_right, ac_rfl]
