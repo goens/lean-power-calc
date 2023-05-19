@@ -2,6 +2,24 @@
  "packagesDir": "lake-packages",
  "packages":
  [{"git":
+   {"url": "https://github.com/opencompl/egg-tactic-code",
+    "subDir?": null,
+    "rev": "2e6d3a43ecb999b4a41d4d850c9b4d8cb3c55acd",
+    "name": "egg-tactic",
+    "inputRev?": "2e6d3a43"}},
+  {"git":
+   {"url": "https://github.com/leanprover-community/lean3port.git",
+    "subDir?": null,
+    "rev": "4683e199fc4bf257f6267cc0178d707af2093994",
+    "name": "lean3port",
+    "inputRev?": "4683e199fc4bf257f6267cc0178d707af2093994"}},
+  {"git":
+   {"url": "https://github.com/leanprover-community/mathlib3port",
+    "subDir?": null,
+    "rev": "739381c46bb23196871fb59c6e79b17a030e8979",
+    "name": "mathbin",
+    "inputRev?": "739381c"}},
+  {"git":
    {"url": "https://github.com/leanprover-community/mathlib4",
     "subDir?": null,
     "rev": "a5ac4ef356e478e53c3a54a21ffede98381e916a",

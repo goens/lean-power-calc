@@ -1,11 +1,8 @@
 import Lean
 inductive Expr
-  | Var : String → Expr
-  | Add : Expr → Expr → Expr
-  | Sub : Expr → Expr → Expr
-  | Mul : Expr → Expr → Expr
-  | Pow : Expr → Expr → Expr
-  | Const : Int → Expr
+  | var : String → Expr
+  | binaryRel : String → Expr → Expr → Expr
+  | const : Int → Expr
   deriving DecidableEq, Inhabited, Repr
 
 inductive Sexp
@@ -14,12 +11,9 @@ inductive Sexp
   deriving Inhabited, Repr
 
 def Expr.toSexp : Expr → Sexp
-  | Expr.Var x => Sexp.atom x
-  | Expr.Add e₁ e₂ => Sexp.list [Sexp.atom "+", e₁.toSexp, e₂.toSexp]
-  | Expr.Sub e₁ e₂ => Sexp.list [Sexp.atom "-", e₁.toSexp, e₂.toSexp]
-  | Expr.Mul e₁ e₂ => Sexp.list [Sexp.atom "*", e₁.toSexp, e₂.toSexp]
-  | Expr.Pow e₁ e₂ => Sexp.list [Sexp.atom "pow", e₁.toSexp, e₂.toSexp]
-  | Expr.Const n => Sexp.atom (toString n)
+  | Expr.var x => Sexp.atom x
+  | Expr.binaryRel op e₁ e₂ => Sexp.list [Sexp.atom op, e₁.toSexp, e₂.toSexp]
+  | Expr.const n => Sexp.atom (toString n)
 
 
 partial def Sexp.toString : Sexp → String
@@ -28,21 +22,31 @@ partial def Sexp.toString : Sexp → String
 
 declare_syntax_cat expr
 syntax ident : expr
+syntax "⊥" : expr
 syntax num : expr
 syntax:65 expr "+" expr : expr
 syntax:65 expr "-" expr : expr
 syntax:70 expr "*" expr : expr
 syntax:75 expr "^" expr : expr
+syntax:76 expr "\\" expr : expr
+syntax:80 expr "⊔" expr : expr
+syntax:80 expr "⊓" expr : expr
+syntax:100 expr "≈" expr : expr
 syntax "(" expr ")" : expr
 syntax "[expr|" expr "]" : term
 
 macro_rules
- | `([expr| $id:ident ]) => `(Expr.Var $(Lean.quote id.getId.toString))
- | `([expr| $n:num ]) => `(Expr.Const $(Lean.quote n.getNat))
- | `([expr| $e₁ + $e₂ ]) => `(Expr.Add [expr| $e₁] [expr| $e₂])
- | `([expr| $e₁ - $e₂ ]) => `(Expr.Sub [expr| $e₁] [expr| $e₂])
- | `([expr| $e₁ * $e₂ ]) => `(Expr.Mul [expr| $e₁] [expr| $e₂])
- | `([expr| $e₁ ^ $e₂ ]) => `(Expr.Pow [expr| $e₁] [expr| $e₂])
+ | `([expr| $id:ident ]) => `(Expr.var $(Lean.quote id.getId.toString))
+ | `([expr| $n:num ]) => `(Expr.const $(Lean.quote n.getNat))
+ | `([expr| ⊥ ]) => `(Expr.const 0)
+ | `([expr| $e₁ + $e₂ ]) => `(Expr.binaryRel "+" [expr| $e₁] [expr| $e₂])
+ | `([expr| $e₁ - $e₂ ]) => `(Expr.binaryRel "-" [expr| $e₁] [expr| $e₂])
+ | `([expr| $e₁ * $e₂ ]) => `(Expr.binaryRel "*" [expr| $e₁] [expr| $e₂])
+ | `([expr| $e₁ ^ $e₂ ]) => `(Expr.binaryRel "pow" [expr| $e₁] [expr| $e₂])
+ | `([expr| $e₁ ⊔ $e₂ ]) => `(Expr.binaryRel "sqcup" [expr| $e₁] [expr| $e₂])
+ | `([expr| $e₁ ⊓ $e₂ ]) => `(Expr.binaryRel "sqcap" [expr| $e₁] [expr| $e₂])
+ | `([expr| $e₁ \ $e₂ ]) => `(Expr.binaryRel "setminus" [expr| $e₁] [expr| $e₂])
+ | `([expr| $e₁ ≈ $e₂ ]) => `(Expr.binaryRel "eq" [expr| $e₁] [expr| $e₂])
  | `([expr| ($e) ]) => `([expr| $e ])
 
 
