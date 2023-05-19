@@ -7,11 +7,11 @@ def binomial4_step2 := [expr| ((x^2) + (2*x*y) + (y^2)) * ((x^2) + (2*x*y) + (y^
 def binomial4_expanded := [expr| (x^4) + (4*(x^3)*y) + (6*(x^2)*(y^2)) + (4*x*(y^3)) + (y^4)]
 
 
-def sdiff_rw_rule1 := [expr| a ⊔ b ⊓ c ≈ (a ⊔ b) ⊓ (a ⊔ c)]
-def sdiff_rw_rule2 := [expr| a ⊓ (b ⊔ c) ≈ a ⊓ b ⊔ a ⊓ c]
-def sdiff_rw_rule3 := [expr| a ⊓ b ⊔ a \ b ≈ a]
-def sdiff_rw_rule4 := [expr| a ⊔ a ⊓ b ≈ a]
-def sdiff_rw_rule5 := [expr| a ⊓ a ≈ a]
+def sup_inf_left := [rw| ?x ⊔ ?y ⊓ ?z => (?x ⊔ ?y) ⊓ (?x ⊔ ?z)]
+def inf_sup_left := [rw| ?x ⊓ (?y ⊔ ?z) => ?x ⊓ ?y ⊔ ?x ⊓ ?z]
+def sup_inf_sdiff := [rw| ?x ⊓ ?y ⊔ ?x \ ?y => ?x]
+def sup_inf_self := [rw| ?a ⊔ ?a ⊓ ?b => ?a]
+def inf_idem := [rw| ?a ⊓ ?a => ?a]
 
 def sdiff_sup1_step0 := [expr| y ⊓ (x ⊔ z) ⊔ y \ x ⊓ y \ z]
 def sdiff_sup1_step1 := [expr| (y ⊓ (x ⊔ z) ⊔ y \ x) ⊓ (y ⊓ (x ⊔ z) ⊔ y \ z) ]
@@ -22,14 +22,25 @@ def sdiff_sup1_step5 := [expr| (y ⊔ y ⊓ z) ⊓ (y ⊔ y ⊓ x)]
 def sdiff_sup1_step6 := [expr| y ]
 
 def polynomials := [binomial4,  binomial4_step1, binomial4_step2, binomial4_expanded]
-def sdiff_rewrites := [sdiff_rw_rule1, sdiff_rw_rule2, sdiff_rw_rule3, sdiff_rw_rule4, sdiff_rw_rule5]
+def sdiff_rewrites := [sup_inf_left, inf_sup_left, sup_inf_sdiff, sup_inf_self, inf_idem]
 def sdiff_sup1_steps := [sdiff_sup1_step0, sdiff_sup1_step1, sdiff_sup1_step2, sdiff_sup1_step3, sdiff_sup1_step4, sdiff_sup1_step5, sdiff_sup1_step6]
+
+def sdiff_sup1_main : Rewrite := { lhs := sdiff_sup1_step0, rhs := sdiff_sup1_step6 }
+def sdiff_sup1_subgoals : List Rewrite :=
+  let pairs := sdiff_sup1_steps.zip sdiff_sup1_steps.tail!
+  pairs.map fun (lhs,rhs) => { lhs := lhs, rhs := rhs }
+
 def main : IO Unit := do
   let polynomial_strings := polynomials.map (·.toSexp.toString)
   IO.println ("\n".intercalate polynomial_strings)
 
-  let sdiff_rewrites_strings := sdiff_rewrites.map (·.toSexp.toString)
+  let sdiff_rewrites_names := ["sup_inf_left", "inf_sup_left", "sup_inf_sdiff", "sup_inf_self", "inf_idem"]
+  let sdiff_rewrites_strings := sdiff_rewrites.zip sdiff_rewrites_names |>.map fun (rw,n) => rw.toRWString n
   IO.println ("\n".intercalate sdiff_rewrites_strings)
 
-  let sdiff_sup1_steps_strings := sdiff_sup1_steps.map (·.toSexp.toString)
-  IO.println ("\n".intercalate sdiff_sup1_steps_strings)
+  IO.println (sdiff_sup1_main.toTestString "sdiff_sup1")
+
+  let sdiff_sup1_subgoal_names := List.range sdiff_sup1_subgoals.length |>.map fun n => s!"subgoal{n+1}"
+  let sdiff_sup1_subgoal_strings := sdiff_sup1_subgoals.zip sdiff_sup1_subgoal_names |>.map fun (rw,n)  => rw.toTestString n
+  IO.println ("\n".intercalate sdiff_sup1_subgoal_strings)
+
