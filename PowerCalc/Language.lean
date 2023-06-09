@@ -52,9 +52,10 @@ syntax:65 expr "+" expr : expr
 syntax:65 expr "-" expr : expr
 syntax:70 expr "*" expr : expr
 syntax:75 expr "^" expr : expr
-syntax:76 expr "\\" expr : expr
-syntax:80 expr "⊔" expr : expr
-syntax:80 expr "⊓" expr : expr
+-- binding strength inherited from mathlib
+syntax:68 expr "⊔" expr : expr
+syntax:69 expr "⊓" expr : expr
+syntax:70 expr "\\" expr : expr
 syntax "(" expr ")" : expr
 syntax "[expr|" expr "]" : term
 syntax "[rw|" expr "=>" expr "]" : term
