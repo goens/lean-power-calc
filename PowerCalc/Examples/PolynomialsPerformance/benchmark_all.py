@@ -4,7 +4,7 @@ import subprocess
 import resource
 import csv
 
-tests = ["TwoGuided", "TwoManual", "TwoUnguided"]
+tests = ["TwoGuided", "TwoManual", "TwoUnguided", "ThreeGuided", "ThreeUnguided"]
 num_runs = 10
 warmup = 2
 

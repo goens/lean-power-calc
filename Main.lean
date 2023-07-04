@@ -6,6 +6,18 @@ def binomial4_step1 := [expr| (x + y)^2 * (x + y)^2]
 def binomial4_step2 := [expr| ((x^2) + (2*x*y) + (y^2)) * ((x^2) + (2*x*y) + (y^2))]
 def binomial4_expanded := [expr| (x^4) + (4*(x^3)*y) + (6*(x^2)*(y^2)) + (4*x*(y^3)) + (y^4)]
 
+def trinomial_3 := [expr| (x + y + z)^3]
+def trinomial_3_step1 := [expr| (x + y + z)*(x + y + z)^2]
+def trinomial_3_step2 := [expr| (x * y * 2 + x * z * 2 + x ^ 2 + y * z * 2 + y ^ 2 + z ^ 2)*(x + y + z)]
+def trinomial_3_expanded := [expr| x * y * z * 6 + x * y ^ 2 * 3 + 
+    x * z ^ 2 * 3 + x ^ 2 * y * 3 + x ^ 2 * z * 3 + 
+    x ^ 3 + y * z ^ 2 * 3 + y ^ 2 * z * 3 + y ^ 3 + z ^ 3]
+
+def trinomial_4:= [expr| (x + y + z)^4]
+def trinomial_4_step1 := [expr| (x + y + z)^2*(x + y + z)^2]
+def trinomial_4_step2 := [expr| (x * y * 2 + x * z * 2 + x ^ 2 + y * z * 2 + y ^ 2 + z ^ 2)*(x + y + z)^2]
+def trinomial_4_step3 := [expr| (x * y * 2 + x * z * 2 + x ^ 2 + y * z * 2 + y ^ 2 + z ^ 2)*(x * y * 2 + x * z * 2 + x ^ 2 + y * z * 2 + y ^ 2 + z ^ 2)]
+def trinomial_4_expanded := [expr| x^4 + 4 * x^3 * y + 4 * x^3 * z + 6 * x^2 * y^2 + 12 * x^2 * y * z + 6 * x^2 * z^2 + 4 * x * y^3 + 12 * x * y^2 * z + 12 * x * y * z^2 + 4 * x * z^3 + y^4 + 4 * y^3 * z + 6 * y^2 * z^2 + 4 * y * z^3 + z^4]
 
 def sup_inf_left := [rw| ?x ⊔ (?y ⊓ ?z) => (?x ⊔ ?y) ⊓ (?x ⊔ ?z)]
 def inf_sup_left := [rw| ?x ⊓ (?y ⊔ ?z) => (?x ⊓ ?y) ⊔ (?x ⊓ ?z)]
@@ -29,7 +41,8 @@ def sdiff_sup1_step4 := [expr| (y ⊓ z ⊔ y) ⊓ (y ⊓ x ⊔ y)]
 def sdiff_sup1_step5 := [expr| (y ⊔ y ⊓ z) ⊓ (y ⊔ y ⊓ x)]
 def sdiff_sup1_step6 := [expr| y ]
 
-def polynomials := [binomial4,  binomial4_step1, binomial4_step2, binomial4_expanded]
+--def polynomials := [binomial4,  binomial4_step1, binomial4_step2, binomial4_expanded]
+def polynomials := [trinomial_3, trinomial_3_step1, trinomial_3_step2, trinomial_3_expanded]
 def sdiff_rewrites := [sup_inf_left, inf_sup_left, sup_inf_sdiff, sup_inf_self, inf_idem, sup_assoc, inf_assoc, sup_comm, inf_comm, sup_assoc', inf_assoc', sup_comm', inf_comm']
 def sdiff_sup1_steps := [sdiff_sup1_step0, sdiff_sup1_step1, sdiff_sup1_step2, sdiff_sup1_step3, sdiff_sup1_step4, sdiff_sup1_step5, sdiff_sup1_step6]
 

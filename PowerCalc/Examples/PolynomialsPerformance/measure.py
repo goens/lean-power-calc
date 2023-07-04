@@ -3,7 +3,7 @@ import subprocess
 import resource
 from sys import argv
 
-time_limit = 1 #minutes
+time_limit = 60 #minutes
 mem_limit = 8 #GB
 
 def run_test(test):
