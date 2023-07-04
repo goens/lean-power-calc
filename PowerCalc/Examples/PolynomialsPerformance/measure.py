@@ -4,7 +4,7 @@ import csv
 import tqdm
 import resource
 
-tests = ["TwoGuided", "TwoManual", "TwoSimp", "TwoUnguided"]
+tests = ["TwoGuided", "TwoManual", "TwoUnguided"]
 num_runs = 10
 warmup = 2
 time_limit = 60 #minutes
@@ -32,20 +32,20 @@ def benchmark_test(test, warmup, num_runs):
     try:
       run_test(test)
     except: #what's the correct error here?
-      res.append({ 'time' : min_to_sec(time_limit), 'mem' : gb_to_b(mem_limit)})
+      res.append({ 'time' : -1, 'mem' : -1, 'timeout' : True})
       continue
     end = resource.getrusage(resource.RUSAGE_CHILDREN)
-    res.append({ 'time' : end.ru_utime - start.ru_utime, 'mem' : end.ru_maxrss - start.ru_maxrss })
+    res.append({ 'time' : end.ru_utime - start.ru_utime, 'mem' : end.ru_maxrss - start.ru_maxrss, 'timeout' : False})
   return res
 
 def main(tests, warmup, num_runs):
     with open('results.csv', 'w') as f:
         csv_writer = csv.writer(f)
-        csv_writer.writerow(["Test", "Time", "Memory"])
+        csv_writer.writerow(["Test", "Time", "Memory", "Timeout"])
         for t in tests:
             res = benchmark_test(t, warmup, num_runs)
             for r in res:
-                csv_writer.writerow([t, r['time'], r['mem']])
+                csv_writer.writerow([t, r['time'], r['mem']], r['timeout'])
 
 if __name__ == "__main__":
     resource.setrlimit(resource.RLIMIT_AS, (gb_to_b(mem_limit) - 1, gb_to_b(mem_limit)))
