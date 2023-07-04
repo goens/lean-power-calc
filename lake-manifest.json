@@ -4,9 +4,9 @@
  [{"git":
    {"url": "https://github.com/opencompl/egg-tactic-code",
     "subDir?": null,
-    "rev": "2e6d3a43ecb999b4a41d4d850c9b4d8cb3c55acd",
+    "rev": "9926446ba068f3ffd349c2c40aec7f1e82a8dc78",
     "name": "egg-tactic",
-    "inputRev?": "2e6d3a43"}},
+    "inputRev?": "9926446ba068f3ffd349c2c40aec7f1e82a8dc78"}},
   {"git":
    {"url": "https://github.com/leanprover-community/lean3port.git",
     "subDir?": null,

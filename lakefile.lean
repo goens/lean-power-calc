@@ -12,7 +12,7 @@ lean_lib «PowerCalc» {
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4" @ "a5ac4ef"
 
-require «egg-tactic» from git  "https://github.com/opencompl/egg-tactic-code" @ "2e6d3a43"
+require «egg-tactic» from git  "https://github.com/opencompl/egg-tactic-code" @ "9926446ba068f3ffd349c2c40aec7f1e82a8dc78"
 
 @[default_target]
 lean_exe «power-calc» {
