@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import subprocess
 import resource
-from sys import argc,argv
+from sys import argv
 
-time_limit = 60 #minutes
+time_limit = 1 #minutes
 mem_limit = 8 #GB
 
 def run_test(test):
@@ -20,7 +20,7 @@ def min_to_sec(m):
     return int(m * 60)
 
 if __name__ == "__main__":
-    if argc != 2:
+    if len(argv) != 2:
         print("Usage: ./measure.py <test>")
         exit(1)
     filename = argv[1]
