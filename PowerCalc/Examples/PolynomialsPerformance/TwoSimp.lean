@@ -1,7 +1,7 @@
 import EggTactic
 
 theorem freshmans_dream (R : Type) (add : R → R → R) (mul : R → R → R) (zero : R) 
-  (two : R) (x y : R) (pow : R → R → R)
+  (x y : R) (pow : R → R → R)
   (pow_two: forall a : R, (pow a two) = (mul a a))
   (distribute: forall a b c : R, (mul a (add b c))        = (add (mul a b) (mul a c)))
   (comm_mul:  forall a b : R, (mul a b)        = (mul b a))

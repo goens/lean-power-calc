@@ -22,10 +22,10 @@ theorem freshmans_dream_pow3
   (x y : R)
   : (x + y)^three = x^three + x*y^two + x^two*y + y^three := by calc 
   (x + y)^three 
-   = (x + y) * (x + y) * (x + y) := by eggcalc3
- _ = (x + y) * (x * (x + y) + y * (x + y)) := by eggcalc3
- _ = (x + y) * (x^two + x * y + y * x + y^two) := by eggcalc3
- _ = (x + y) * (x^two + y^two) := by eggcalc3
- _ = x * ((x^two) + (y^two)) + y * ((x^two) + (y^two)) :=  by eggcalc3
- _ = (x * x^two) + x*y^two + y * x^two + y*(y^two) :=  by eggcalc3
- _ = x^three + x*y^two + x^two*y + y^three := by eggcalc3 
+ _ = (x + y) * (x + y) * (x + y) := by ges3
+ _ = (x + y) * (x * (x + y) + y * (x + y)) := by ges3
+ _ = (x + y) * (x^two + x * y + y * x + y^two) := by ges3
+ _ = (x + y) * (x^two + y^two) := by ges3
+ _ = x * ((x^two) + (y^two)) + y * ((x^two) + (y^two)) :=  by ges3
+ _ = (x * x^two) + x*y^two + y * x^two + y*(y^two) :=  by ges3
+ _ = x^three + x*y^two + x^two*y + y^three := by ges3 
