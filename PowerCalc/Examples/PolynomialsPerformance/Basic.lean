@@ -32,4 +32,4 @@ macro "eggcalc" : tactic => `(tactic| egg [comm_add , comm_mul, add_assoc, mul_a
 
 -- adds pow_three
 set_option hygiene false in
-macro "eggcalc3" : tactic => `(tactic| egg [comm_add , comm_mul, add_assoc, mul_assoc, sub_canon, neg_add , div_canon , zero_add, zero_mul, one_mul, distribute, pow_one, pow_two, char_two, pow_three] simplify (timeLimit := 3601) )
+macro "eggcalc3" : tactic => `(tactic| egg [comm_add , comm_mul, add_assoc, mul_assoc, sub_canon, neg_add , div_canon , zero_add, zero_mul, one_mul, distribute, pow_one, pow_two, char_two, pow_three] simplify noInstantiation (timeLimit := 3601) )
