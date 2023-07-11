@@ -41,11 +41,12 @@ theorem inv_mul
   (mulOne: forall (a: G), a * one = a)
   (invRight: forall (a: G), a * (inv a) = one)
   (x y : G)
-  : (inv (x * y)) = ((inv y) * (inv x)) := by calc
-   (inv (x * y)) = (inv (x * y)) * one := by ges
-    _ = (inv (x * y)) * one := by ges
-    _ = (inv (x * y)) * (y * (inv y)) := by ges
-    _ = (inv y) * (inv x) := sorry
+  : (inv (x * y)) = (inv y) * (inv x) := by calc
+  inv (x * y) = (inv (x * y)) * (x * (inv x)) := by ges
+            _ = (inv (x * y)) * (x * (y * inv y) * (inv x)) := by ges
+            _ = (inv (x * y)) * (x * y) * (inv y * inv x) := by ges
+            _ = one * (inv y * inv x) := by ges
+            _ = inv y * inv x := by ges
   
 theorem one_inv
   (assocMul: forall (a b c: G), a * (b * c) = (a * b) * c)
