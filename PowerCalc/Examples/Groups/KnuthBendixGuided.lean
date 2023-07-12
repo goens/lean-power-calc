@@ -10,8 +10,7 @@ theorem inv_inv
   (invRight: forall (a: G), a * (inv a) = one)
   (x: G)
   : (inv (inv x) = x) := by calc
-  inv (inv x) = inv (inv x) * one := by ges
-             _ = (inv (inv x))*((inv x) * x) := by ges
+  inv (inv x) = (inv (inv x))*((inv x) * x) := by ges
              _ = x := by ges
 
 theorem inv_mul_cancel_left
